@@ -6,7 +6,7 @@ import joblib
 st.set_page_config(page_title="Evaluador Nutricional", layout="centered")
 
 st.title("Sistema de Clasificación de Alimentos (Machine Learning)")
-st.write("Examen Final - Despliegue de Modelos de Clasificación Binaria")
+st.write("Proceso de Aprendizaje 2")
 
 # Enlace directo al repositorio de desarrollo en la barra lateral (Modo Lectura)
 st.sidebar.header("Documentación del Proyecto")
