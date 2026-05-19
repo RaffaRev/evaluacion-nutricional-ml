@@ -15,7 +15,7 @@ opcion_modelo = st.selectbox(
 )
 
 # Mapeo directo a los nombres de los archivos guardados en la raíz
-archivo_modelo = 'modelo_logistic_regression.pkl' if opcion_modelo == "Regresión Logística" else 'modelo_random_forest.pkl'
+archivo_modelo = 'logistic_regression_model.pkl' if opcion_modelo == "Regresión Logística" else 'ramdom_forest_model.pkl'
 
 @st.cache_resource
 def cargar_modelo(path):
