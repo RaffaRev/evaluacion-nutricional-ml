@@ -21,11 +21,11 @@ opcion_modelo = st.selectbox(
     ("Regresión Logística", "Random Forest")
 )
 
-# Mapeo exacto a los nombres de los archivos en su GitHub (con los nombres actuales)
+# Mapeo exacto a los nombres de los archivos en su GitHub
 if opcion_modelo == "Regresión Logística":
     archivo_modelo = 'logistic_regression_model.pkl'
 else:
-    archivo_modelo = 'ramdom_forest_model.pkl'  # Mantiene el nombre exacto de su GitHub
+    archivo_modelo = 'ramdom_forest_model.pkl'
 
 @st.cache_resource
 def cargar_modelo(path):
@@ -39,35 +39,34 @@ except Exception as e:
 
 st.divider()
 
-# 3. Interfaz de usuario para la captura de Características (Todas las columnas de X)
+# 3. Interfaz de usuario con rangos optimizados y números enteros
 st.subheader("Parámetros Nutricionales del Alimento")
 st.write("Ajuste los valores según la etiqueta nutricional del producto para proceder con la clasificación.")
 
-# Bloque 1: Macronutrientes y Calorías
-calories = st.slider("Calorías (Calories)", min_value=0.0, max_value=1000.0, value=250.0, step=1.0)
-total_fat_dv = st.slider("Grasa Total (Total_Fat_DV %)", min_value=0.0, max_value=100.0, value=15.0, step=0.5)
-sat_fat_dv = st.slider("Grasa Saturada (Sat_Fat_DV %)", min_value=0.0, max_value=100.0, value=10.0, step=0.5)
-trans_fat = st.slider("Grasas Trans (Trans_Fat) en gramos", min_value=0.0, max_value=50.0, value=0.0, step=0.1)
-proteins_g = st.slider("Proteínas (Proteins_G) en gramos", min_value=0.0, max_value=100.0, value=15.0, step=0.1)
+# Bloque 1: Macronutrientes y Calorías (Rango Calorías: 0-300, Resto: 0-80, Enteros)
+calories = st.slider("Calorías (Calories)", min_value=0, max_value=300, value=120, step=1)
+total_fat_dv = st.slider("Grasa Total (Total_Fat_DV %)", min_value=0, max_value=80, value=10, step=1)
+sat_fat_dv = st.slider("Grasa Saturada (Sat_Fat_DV %)", min_value=0, max_value=80, value=5, step=1)
+trans_fat = st.slider("Grasas Trans (Trans_Fat) en gramos", min_value=0, max_value=80, value=0, step=1)
+proteins_g = st.slider("Proteínas (Proteins_G) en gramos", min_value=0, max_value=80, value=12, step=1)
 
-# Bloque 2: Carbohidratos y Azúcares
-carbs_dv = st.slider("Carbohidratos (Carbs_DV %)", min_value=0.0, max_value=100.0, value=30.0, step=0.5)
-fiber_dv = st.slider("Fibra Alimentaria (Fiber_DV %)", min_value=0.0, max_value=100.0, value=10.0, step=0.5)
-total_sugars_g = st.slider("Azúcares Totales (Total_Sugars_G) en gramos", min_value=0.0, max_value=150.0, value=12.0, step=0.5)
-added_sugars_dv = st.slider("Azúcares Añadidos (Added_Sugars_DV %)", min_value=0.0, max_value=100.0, value=5.0, step=0.5)
+# Bloque 2: Carbohidratos y Azúcares (Rango: 0-80, Enteros)
+carbs_dv = st.slider("Carbohidratos (Carbs_DV %)", min_value=0, max_value=80, value=25, step=1)
+fiber_dv = st.slider("Fibra Alimentaria (Fiber_DV %)", min_value=0, max_value=80, value=15, step=1)
+total_sugars_g = st.slider("Azúcares Totales (Total_Sugars_G) en gramos", min_value=0, max_value=80, value=8, step=1)
+added_sugars_dv = st.slider("Azúcares Añadidos (Added_Sugars_DV %)", min_value=0, max_value=80, value=4, step=1)
 
-# Bloque 3: Minerales, Vitaminas y Otros Componentes
-cholesterol_dv = st.slider("Colesterol (Cholesterol_DV %)", min_value=0.0, max_value=100.0, value=5.0, step=0.5)
-sodium_dv = st.slider("Sodio (Sodium_DV %)", min_value=0.0, max_value=100.0, value=8.0, step=0.5)
-vitamin_d_dv = st.slider("Vitamina D (Vitamin_D_DV %)", min_value=0.0, max_value=100.0, value=0.0, step=0.5)
-calcium_dv = st.slider("Calcio (Calcium_DV %)", min_value=0.0, max_value=100.0, value=15.0, step=0.5)
-iron_dv = st.slider("Hierro (Iron_DV %)", min_value=0.0, max_value=100.0, value=10.0, step=0.5)
-potassium_dv = st.slider("Potasio (Potassium_DV %)", min_value=0.0, max_value=100.0, value=5.0, step=0.5)
+# Bloque 3: Minerales, Vitaminas y Otros Componentes (Rango: 0-80, Enteros)
+cholesterol_dv = st.slider("Colesterol (Cholesterol_DV %)", min_value=0, max_value=80, value=5, step=1)
+sodium_dv = st.slider("Sodio (Sodium_DV %)", min_value=0, max_value=80, value=10, step=1)
+vitamin_d_dv = st.slider("Vitamina D (Vitamin_D_DV %)", min_value=0, max_value=80, value=0, step=1)
+calcium_dv = st.slider("Calcio (Calcium_DV %)", min_value=0, max_value=80, value=10, step=1)
+iron_dv = st.slider("Hierro (Iron_DV %)", min_value=0, max_value=80, value=8, step=1)
+potassium_dv = st.slider("Potasio (Potassium_DV %)", min_value=0, max_value=80, value=5, step=1)
 
 # =========================================================================
 # 4. CONSTRUCCIÓN DEL DATAFRAME CON EL ORDEN EXACTO DE ENTRENAMIENTO
 # =========================================================================
-# Se excluyen 'Food_Id' y 'Healthiness' de forma estricta.
 datos_entrada = pd.DataFrame([{
     'Calories': calories,
     'Total_Fat_DV': total_fat_dv,
@@ -95,7 +94,7 @@ if st.button("Evaluar Perfil Alimentario"):
         
         st.subheader("Resultado del Análisis:")
         if prediccion == 0:
-            st.success("🟢 ALIMENTO SALUDABLE: El perfil nutritional se encuentra dentro de los márgenes aceptables.")
+            st.success("🟢 ALIMENTO SALUDABLE: El perfil nutricional se encuentra dentro de los márgenes aceptables.")
         else:
             st.error("🔴 ALIMENTO NO SALUDABLE: Se detectaron excesos o desbalances críticos en los componentes analizados.")
             
