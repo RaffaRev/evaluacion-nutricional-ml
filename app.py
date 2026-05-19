@@ -59,3 +59,14 @@ if st.button("Evaluar Perfil Alimentario"):
             
     except Exception as error:
         st.error(f"Error en la predicción: {error}. Verifique la correspondencia de las variables.")
+
+# ENLACE AL CUADERNO DE DESARROLLO (MODO LECTURA)
+# =========================================================================
+st.sidebar.header("Documentación del Proyecto")
+st.sidebar.write("Acceda al cuaderno original de Google Colab para revisar el Análisis Exploratorio (EDA) y el modelado estadístico:")
+
+# REEMPLACE LA URL DE ABAJO POR SU ENLACE REAL DE COMPARTIR EN COLAB
+url_colab = "https://colab.research.google.com/drive/1-5SIoqvwNV4fMvLP7FN2NS9P4gjampz0?usp=sharing"
+
+st.sidebar.markdown(f"[📘 Ver Google Colab (Solo Lectura)]({url_colab})")
+st.sidebar.divider()
